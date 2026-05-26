@@ -1,6 +1,6 @@
 {
-	"Name": "ytm-desktop controller",
-	"Version": "0.1.2.0",
+	"Name": "ytm-desktop controller (Beta)",
+	"Version": "0.1.3.0",
 	"Author": "Hayate Kojima",
 	"Actions": [
 		{
@@ -162,9 +162,25 @@
 					"TitleAlignment": "middle"
 				}
 			]
+		},
+		{
+			"Name": "Set Volume",
+			"UUID": "jp.hayate-kojima.ytm-desktop-controller.set-volume",
+			"Icon": "imgs/actions/set-volume/icon",
+			"Tooltip": "Set volume to a specific level (0-100)",
+			"PropertyInspectorPath": "ui/set-volume.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/set-volume/key",
+					"TitleAlignment": "middle"
+				}
+			]
 		}
 	],
-	"Category": "ytm-desktop controller",
+	"Category": "ytm-desktop controller (Beta)",
 	"CategoryIcon": "imgs/plugin/category-icon",
 	"CodePath": "bin/plugin.js",
 	"Description": "This plugin allows you to control YouTube Music with pear-desktop (previous name: th-ch/ytm-desktop). For detailed instructions, please refer to https://github.com/tuat-yate/ytm-desktop-controller.",

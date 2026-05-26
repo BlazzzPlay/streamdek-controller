@@ -85,6 +85,35 @@ export abstract class BaseAction<T extends BaseSettings> extends SingletonAction
         });
     }
 
+    protected async delete(port: string, endpoint: string, body?: any): Promise<Response> {
+        return this.request(port, endpoint, {
+            method: "DELETE",
+            body: body ? JSON.stringify(body) : undefined
+        });
+    }
+
+	// JPEG/PNG のヘッダから画像サイズを読む(画素はデコードしない)。読めなければ null。
+	private getImageSize(buf: Buffer, mime: string): { w: number; h: number } | null {
+		try {
+			if (mime.includes("png")) {
+				return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+			}
+			// JPEG: SOFマーカー(0xC0〜0xCF、ただしC4/C8/CCを除く)を走査
+			let off = 2;
+			while (off + 8 < buf.length) {
+				if (buf[off] !== 0xff) { off++; continue; }
+				const marker = buf[off + 1];
+				if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+					return { h: buf.readUInt16BE(off + 5), w: buf.readUInt16BE(off + 7) };
+				}
+				off += 2 + buf.readUInt16BE(off + 2);
+			}
+		} catch {
+			// 解析失敗時は null を返してフォールバックさせる
+		}
+		return null;
+	}
+
 	private async updateImage(ev: WillAppearEvent<T>) {
 		const settings = ev.payload.settings;
 		const showArtwork = !!settings.showArtwork;
@@ -111,7 +140,22 @@ export abstract class BaseAction<T extends BaseSettings> extends SingletonAction
 			const arrayBuffer = await blob.arrayBuffer();
 			const buffer = Buffer.from(arrayBuffer);
 			const base64 = buffer.toString("base64");
-			const image = `data:${blob.type};base64,${base64}`;
+			const dataUri = `data:${blob.type};base64,${base64}`;
+
+			// YouTubeのサムネ等は長方形(16:9/4:3)で、そのまま渡すと正方形ボタンで
+			// 引き伸ばされて潰れる。Stream Deckのキー画像レンダラ(QtSvg)は
+			// preserveAspectRatio="slice"を無視して明示width/heightに伸縮するため、
+			// 自前で「カバー(正方形を覆う)」寸法を計算し、縦横比を保ったまま中央配置する。
+			// ビューポート(size×size)からはみ出した両脇/上下はクリップされて切り落とされる。
+			const size = 144;
+			const { w, h } = this.getImageSize(buffer, blob.type) ?? { w: size, h: size };
+			const scale = Math.max(size / w, size / h);
+			const dw = w * scale;
+			const dh = h * scale;
+			const dx = (size - dw) / 2;
+			const dy = (size - dh) / 2;
+			const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><image href="${dataUri}" x="${dx}" y="${dy}" width="${dw}" height="${dh}" preserveAspectRatio="none"/></svg>`;
+			const image = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 
 			await ev.action.setImage(image);
 		} catch (error) {

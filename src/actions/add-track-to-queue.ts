@@ -26,10 +26,10 @@ export class AddTrackToQueueAction extends BaseAction<TrackSettings> {
 			const isQueueBlank = queueData && Array.isArray(queueData.items) ? queueData.items.length === 0 : true;
 
 			if (forcePlay) {
-				// キューの最後尾までスキップ
-				await this.jumpLastQueue(port);
+				// 現在のキューをクリアしてから追加する
+				await this.delete(port, "/queue");
 			}
-			
+
 			try {
 				await this.post(port, "/queue", { videoId: videoId });
 			} catch (reqError) {
@@ -39,6 +39,9 @@ export class AddTrackToQueueAction extends BaseAction<TrackSettings> {
 			await new Promise((r) => setTimeout(r, 1000));
 
 			if (forcePlay) {
+				// DELETEで待機列はクリアしたが、再生中/一時停止中の「現在曲」は
+				// そのまま残る(DELETEは再生を止めない)。そのため /next で
+				// 追加した曲へ明示的に進めないと現在曲が切り替わらない。
 				await this.post(port, "/next");
 				await this.post(port, "/play");
 			}
@@ -48,54 +51,6 @@ export class AddTrackToQueueAction extends BaseAction<TrackSettings> {
 
 		} catch (error) {
 			console.error("Error adding track to queue:", error);
-		}
-	}
-
-	private async jumpLastQueue(port: string): Promise<number> {
-		try {
-			console.log("Starting queue stabilization process...");
-			let lastCount = -1;
-			let currentCount = 0;
-			let stableCounter = 0;
-			const maxRetries = 50;
-
-			// キューの数が変化しなくなるまで繰り返す
-			for (let i = 0; i < maxRetries; i++) {
-				
-				// 1. 現在のキューの数を取得
-				const queueData = await this.get(port, "/queue");
-				currentCount = (queueData && Array.isArray(queueData.items)) ? queueData.items.length : 0;
-
-				// 終了判定: 前回と同じ数なら安定とみなす
-				if (currentCount === lastCount) {
-					stableCounter++;
-					if (stableCounter >= 3) {
-						break;
-					}
-				} else {
-					stableCounter = 0;
-				}
-
-				lastCount = currentCount;
-
-				if (currentCount > 0) {
-					// 2. 現在のキューの最終へジャンプ (indexは0始まりなので length - 1)
-					const jumpIndex = currentCount - 1;
-
-					await this.patch(port, "/queue", { index: jumpIndex });
-					await this.post(port, "/pause");
-
-					// ジャンプ後、読み込みを待つ
-					await new Promise((r) => setTimeout(r, 1000));
-				} else {
-					// キューが空の場合は単に待機
-					await new Promise((r) => setTimeout(r, 1000));
-				}
-			}
-			return currentCount;
-		} catch (patchError) {
-			console.error("Error during queue stabilization:", patchError);
-			return 0;
 		}
 	}
 }

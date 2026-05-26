@@ -18,6 +18,19 @@ This streamdeck plugin allows you to control YouTube Music with [pear-desktop](h
 
 3. Install Streamdeck Plugin [here](https://marketplace.elgato.com/product/ytm-desktop-controller-7dfe9fc1-80a9-44e3-80c5-4cf456b74a2b)
 
+### Installing a Beta build (`.streamDeckPlugin`)
+Pre-release (beta) builds are published as a `.streamDeckPlugin` file on the [GitHub Releases](https://github.com/tuat-yate/ytm-desktop-controller/releases) page, so you can test fixes before they reach the Marketplace.
+
+1. Make sure the Stream Deck app is installed and running.
+2. Download the `.streamDeckPlugin` file from the [latest release](https://github.com/tuat-yate/ytm-desktop-controller/releases).
+3. Double-click the downloaded file. The Stream Deck app shows an install prompt — click **Install**.
+4. The action group **ytm-desktop controller (Beta)** appears in the actions list.
+
+> [!NOTE]
+> Installing a beta build replaces the Marketplace version (they share the same plugin ID). You can reinstall the Marketplace version anytime to go back.
+
+For the general procedure of installing a downloaded plugin, see Elgato's official guide: [Stream Deck — Download and use Plugins](https://help.elgato.com/hc/en-us/articles/33589587352337-Elgato-Stream-Deck-Download-and-use-Plugins).
+
 ## Actions
 - [Base Arguments](#base-arguments)
 - [Add Playlist to Queue](#add-playlist-to-queue)

@@ -6,6 +6,7 @@ import { LikeAction, DislikeAction } from "./actions/rate";
 import { TogglePlayAction, NextAction, PreviousAction } from "./actions/playback";
 import { ArtworkAction } from "./actions/artwork";
 import { GoForwardAction, GoBackAction } from "./actions/go-forward-back";
+import { SetVolumeAction } from "./actions/volume";
 
 // We can enable "trace" logging so that all messages between the Stream Deck, and the plugin are recorded. When storing sensitive information
 streamDeck.logger.setLevel("trace");
@@ -21,6 +22,7 @@ streamDeck.actions.registerAction(new PreviousAction());
 streamDeck.actions.registerAction(new ArtworkAction());
 streamDeck.actions.registerAction(new GoForwardAction());
 streamDeck.actions.registerAction(new GoBackAction());
+streamDeck.actions.registerAction(new SetVolumeAction());
 
 // Initialize global settings.
 streamDeck.settings.getGlobalSettings<{ port?: string }>().then(settings => {
