@@ -47,7 +47,7 @@ For the general procedure of installing a downloaded plugin, see Elgato's offici
 ---
   
 ### Base Arguments
-These options are shared by every action that can display the now-playing artwork (**Artwork**, **Add Track to Queue**, **Add Playlist to Queue**).
+These options are shared by every action that can display the now-playing artwork (**Artwork**, **Add Track to Queue**, **Add Playlist to Queue**, **Toggle Play**, **Next**, **Previous**). For example, enabling them on **Toggle Play** gives you a single key that shows the album art (with track info / progress) and toggles play/pause when pressed.
 
 | Argument | Description |
 |---|---|
@@ -111,13 +111,13 @@ Rewind the currently playing song.
 | `time` | The number of seconds to rewind. |
 
 ### Toggle Play
-Toggle play/pause. 
+Toggle play/pause. Can also display the now-playing artwork (with optional track info / progress bar) — see [Base Arguments](#base-arguments).
 
 ### Next
-Skip to the next track.
+Skip to the next track. Can also display the now-playing artwork — see [Base Arguments](#base-arguments).
 
 ### Previous
-Skip to the previous track.
+Skip to the previous track. Can also display the now-playing artwork — see [Base Arguments](#base-arguments).
 
 ### Like
 Like the currently playing song. 
