@@ -47,10 +47,29 @@ For the general procedure of installing a downloaded plugin, see Elgato's offici
 ---
   
 ### Base Arguments
+These options are shared by every action that can display the now-playing artwork (**Artwork**, **Add Track to Queue**, **Add Playlist to Queue**).
+
 | Argument | Description |
 |---|---|
 | `Port` | Port number of the API. Default is `26538`. |
 | `Show Now-playing Artwork` | Show artwork if play. This option will save when the streamdeck is restarted. Please restart or page switch to apply the setting.  |
+| `Show Track Info` | Overlay the now-playing text (e.g. title / artist) on top of the artwork. Long text scrolls automatically. Requires `Show Now-playing Artwork`. |
+| `Text Template` | The text shown when `Show Track Info` is enabled. Supports the tokens below. Defaults to `{title} - {artist}`. Disabled while `Show Track Info` is off. |
+| `Show Progress Bar` | Show a green playback progress bar along the bottom edge of the artwork. Requires `Show Now-playing Artwork`. |
+
+#### Text Template tokens
+You can freely combine the following tokens (plus any literal text) in `Text Template`:
+
+| Token | Replaced with |
+|---|---|
+| `{title}` | Track title |
+| `{artist}` | Artist name |
+| `{album}` | Album name |
+
+Examples:
+- `{title} - {artist}` → `Bohemian Rhapsody - Queen`
+- `{artist}: {title}` → `Queen: Bohemian Rhapsody`
+- `♪ {title}` → `♪ Bohemian Rhapsody`
 
 ### Add Playlist to Queue
 Add a YouTube Music playlist to the queue. 
@@ -72,7 +91,10 @@ Add a YouTube Music track to the queue.
 | `forcePlay` | Skip the current queue and play. |
 
 ### Artwork
-Displays the album art of the currently playing song.
+Displays the album art of the currently playing song. It can optionally overlay the
+now-playing text (with automatic scrolling for long titles) and a playback progress bar.
+See [Base Arguments](#base-arguments) for `Show Track Info`, `Text Template`, and
+`Show Progress Bar`.
 
 ### Go Forward
 Fast-forward the currently playing song. 
