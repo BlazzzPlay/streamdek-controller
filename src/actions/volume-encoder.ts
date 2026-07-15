@@ -6,7 +6,8 @@ import {
 	DidReceiveGlobalSettingsEvent,
 	SingletonAction,
 	streamDeck,
-	WillAppearEvent
+	WillAppearEvent,
+	WillDisappearEvent
 } from "@elgato/streamdeck";
 import { getPort, httpGet, httpPost } from "./http-client";
 
@@ -15,17 +16,16 @@ type VolumeEncoderSettings = {
 };
 
 /**
- * Volume encoder action for Stream Deck Plus.
- *
- * Rotate CW/CCW: adjust volume by ±2 per tick, clamped 0–100.
- * Press: toggle mute/unmute.
- * Touch strip ($B1): bar indicator (0–100) with numeric title or "Muted".
+ * Volume encoder for Stream Deck Plus.
+ * - Polls GET /api/v1/volume every second for real-time state.
+ * - Rotate: ±2 per tick, clamped 0–100, reads current volume from API before applying delta.
+ * - Press: toggle mute, reading current state from API (no local drift).
+ * - Touch strip ($B1): bar 0–100 + "Vol: 75" or "Muted".
  */
 @action({ UUID: "com.blazzzplay.streamdek-controller.volume-encoder" })
 export class VolumeEncoderAction extends SingletonAction<VolumeEncoderSettings> {
 	private globalSettings: { port?: string } = {};
-	private isMuted = false;
-	private previousVolume = 50;
+	private pollTimer: ReturnType<typeof setInterval> | null = null;
 
 	constructor() {
 		super();
@@ -45,6 +45,21 @@ export class VolumeEncoderAction extends SingletonAction<VolumeEncoderSettings> 
 	): Promise<void> {
 		const dial = ev.action as DialAction<VolumeEncoderSettings>;
 		await dial.setFeedbackLayout("$B1");
+
+		// Read current state immediately
+		await this.updateFeedback(ev);
+
+		// Poll every second to keep touch strip in sync
+		this.pollTimer = setInterval(() => this.updateFeedback(ev), 1000);
+	}
+
+	override onWillDisappear(
+		_ev: WillDisappearEvent<VolumeEncoderSettings>
+	): void {
+		if (this.pollTimer) {
+			clearInterval(this.pollTimer);
+			this.pollTimer = null;
+		}
 	}
 
 	override async onDialRotate(
@@ -55,59 +70,45 @@ export class VolumeEncoderAction extends SingletonAction<VolumeEncoderSettings> 
 			const ticks = ev.payload.ticks;
 			const delta = ticks * 2;
 
-			if (this.isMuted) {
-				if (delta > 0) {
-					// CW rotation while muted: unmute at previous volume (no delta)
-					this.isMuted = false;
-					await httpPost(port, "/volume", {
-						volume: this.previousVolume
-					});
-					await ev.action.setFeedback({
-						value: this.previousVolume,
-						title: String(this.previousVolume)
-					});
-				} else {
-					// CCW rotation while muted: adjust stored volume, stay muted
-					const target = Math.max(
-						0,
-						Math.min(100, this.previousVolume + delta)
-					);
-					if (target > 0) {
-						this.previousVolume = target;
-					}
-					await httpPost(port, "/volume", { volume: target });
-					await ev.action.setFeedback({
-						value: target,
-						title: "Muted"
-					});
-				}
-				return;
-			}
-
-			// Normal (unmuted) rotation: read current volume, apply delta
-			const volumeData = await httpGet<{ volume: number }>(
+			// Always read current volume from API — no local state drift
+			const volData = await httpGet<{ state: number; isMuted: boolean }>(
 				port,
 				"/volume"
 			);
-			if (volumeData === null) {
+
+			if (volData === null) {
+				await ev.action.setFeedback({ value: 0, title: "⚠ Offline" });
+				return;
+			}
+
+			const current = volData.state;
+			const isMuted = volData.isMuted;
+
+			if (isMuted && delta > 0) {
+				// CW while muted: unmute at current level + delta
+				const target = Math.max(1, Math.min(100, current + delta));
+				await httpPost(port, "/volume", { volume: target });
 				await ev.action.setFeedback({
-					value: 0,
-					title: "⚠ Offline"
+					value: target,
+					title: `Vol: ${target}`
 				});
 				return;
 			}
 
-			const current = volumeData.volume;
-			const target = Math.max(0, Math.min(100, current + delta));
-			await httpPost(port, "/volume", { volume: target });
-
-			if (target > 0) {
-				this.previousVolume = target;
+			if (isMuted) {
+				// CCW while muted: stay muted, adjust hidden volume
+				const target = Math.max(0, Math.min(100, current + delta));
+				await httpPost(port, "/volume", { volume: target });
+				await ev.action.setFeedback({ value: target, title: "Muted" });
+				return;
 			}
 
+			// Normal rotation
+			const target = Math.max(0, Math.min(100, current + delta));
+			await httpPost(port, "/volume", { volume: target });
 			await ev.action.setFeedback({
 				value: target,
-				title: String(target)
+				title: target > 0 ? `Vol: ${target}` : "Muted"
 			});
 		} catch {
 			await ev.action.setFeedback({ value: 0, title: "⚠ Offline" });
@@ -119,25 +120,40 @@ export class VolumeEncoderAction extends SingletonAction<VolumeEncoderSettings> 
 	): Promise<void> {
 		try {
 			const port = getPort(ev.payload.settings, this.globalSettings);
-
-			if (this.isMuted) {
-				// Unmute: restore previous volume
-				this.isMuted = false;
-				await httpPost(port, "/volume", {
-					volume: this.previousVolume
-				});
-				await ev.action.setFeedback({
-					value: this.previousVolume,
-					title: String(this.previousVolume)
-				});
-			} else {
-				// Mute
-				this.isMuted = true;
-				await httpPost(port, "/volume", { volume: 0 });
-				await ev.action.setFeedback({ value: 0, title: "Muted" });
-			}
+			await httpPost(port, "/toggle-mute");
+			// Poll will update the display on next tick
 		} catch {
 			await ev.action.setFeedback({ value: 0, title: "⚠ Offline" });
+		}
+	}
+
+	/** Fetch current volume from API and update the touch strip. */
+	private async updateFeedback(
+		ev: WillAppearEvent<VolumeEncoderSettings> | DialRotateEvent<VolumeEncoderSettings>
+	): Promise<void> {
+		try {
+			const port = getPort(ev.payload.settings, this.globalSettings);
+			const volData = await httpGet<{ state: number; isMuted: boolean }>(
+				port,
+				"/volume"
+			);
+			const dial = ev.action as DialAction<VolumeEncoderSettings>;
+
+			if (volData === null) {
+				await dial.setFeedback({ value: 0, title: "⚠ Offline" });
+				return;
+			}
+
+			if (volData.isMuted) {
+				await dial.setFeedback({ value: volData.state, title: "Muted" });
+			} else {
+				await dial.setFeedback({
+					value: volData.state,
+					title: `Vol: ${volData.state}`
+				});
+			}
+		} catch {
+			// Silently ignore poll errors
 		}
 	}
 }
