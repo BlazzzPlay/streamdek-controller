@@ -6,7 +6,7 @@ import path from "node:path";
 import url from "node:url";
 
 const isWatching = !!process.env.ROLLUP_WATCH;
-const sdPlugin = "jp.hayate-kojima.ytm-desktop-controller.sdPlugin";
+const sdPlugin = "com.blazzzplay.streamdek-controller.sdPlugin";
 
 /**
  * @type {import('rollup').RollupOptions}

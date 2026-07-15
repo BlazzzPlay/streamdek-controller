@@ -1,7 +1,7 @@
 {
     "scripts": {
         "build": "rollup -c",
-        "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart jp.hayate-kojima.ytm-desktop-controller\""
+        "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart com.blazzzplay.streamdek-controller\""
     },
     "type": "module",
     "devDependencies": {

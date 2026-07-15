@@ -9,7 +9,7 @@ type PlaylistSettings = BaseSettings & {
 	shuffle: boolean;
 };
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.add-playlist-to-queue" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.add-playlist-to-queue" })
 export class AddPlaylistToQueueAction extends BaseAction<PlaylistSettings> {
 	override async onKeyDown(ev: KeyDownEvent<PlaylistSettings>): Promise<void> {
 		console.log("Button pressed. Fetching playlist...");

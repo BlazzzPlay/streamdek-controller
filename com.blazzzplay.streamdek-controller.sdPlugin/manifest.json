@@ -1,11 +1,11 @@
 {
-	"Name": "ytm-desktop controller",
+	"Name": "Streamdek Controller",
 	"Version": "0.2.0.0",
-	"Author": "Hayate Kojima",
+	"Author": "BlazzzPlay",
 	"Actions": [
 		{
-			"Name": "Add Playlist to Queue",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.add-playlist-to-queue",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.add-playlist-to-queue",
 			"Icon": "imgs/actions/add-playlist/icon",
 			"Tooltip": "Add playlist items to queue",
 			"PropertyInspectorPath": "ui/add-playlist-to-queue.html",
@@ -20,8 +20,8 @@
 			]
 		},
 		{
-			"Name": "Add Track to Queue",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.add-track-to-queue",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.add-track-to-queue",
 			"Icon": "imgs/actions/add-track/icon",
 			"Tooltip": "Add track items to queue",
 			"PropertyInspectorPath": "ui/add-track-to-queue.html",
@@ -36,8 +36,8 @@
 			]
 		},
 		{
-			"Name": "Like",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.like",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.like",
 			"Icon": "imgs/actions/like/icon",
 			"Tooltip": "Like track",
 			"PropertyInspectorPath": "ui/rate.html",
@@ -52,8 +52,8 @@
 			]
 		},
 		{
-			"Name": "Dislike",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.dislike",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.dislike",
 			"Icon": "imgs/actions/dislike/icon",
 			"Tooltip": "Dislike track",
 			"PropertyInspectorPath": "ui/rate.html",
@@ -68,8 +68,8 @@
 			]
 		},
 		{
-			"Name": "Toggle Play",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.toggle-play",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.toggle-play",
 			"Icon": "imgs/actions/toggle-play/icon",
 			"Tooltip": "Toggle play/pause",
 			"PropertyInspectorPath": "ui/playback.html",
@@ -84,8 +84,8 @@
 			]
 		},
 		{
-			"Name": "Next",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.next",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.next",
 			"Icon": "imgs/actions/next/icon",
 			"Tooltip": "Next track",
 			"PropertyInspectorPath": "ui/playback.html",
@@ -100,8 +100,8 @@
 			]
 		},
 		{
-			"Name": "Previous",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.previous",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.previous",
 			"Icon": "imgs/actions/previous/icon",
 			"Tooltip": "Previous track",
 			"PropertyInspectorPath": "ui/playback.html",
@@ -116,8 +116,8 @@
 			]
 		},
 		{
-			"Name": "Artwork Preview",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.artwork",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.artwork",
 			"Icon": "imgs/actions/artwork/icon",
 			"Tooltip": "Previous artwork",
 			"PropertyInspectorPath": "ui/artwork.html",
@@ -132,8 +132,8 @@
 			]
 		},
 		{
-			"Name": "Go Forward",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.go-forward",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.go-forward",
 			"Icon": "imgs/actions/go-forward/icon",
 			"Tooltip": "Go forward",
 			"PropertyInspectorPath": "ui/go-forward-back.html",
@@ -148,8 +148,8 @@
 			]
 		},
 		{
-			"Name": "Go Back",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.go-back",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.go-back",
 			"Icon": "imgs/actions/go-back/icon",
 			"Tooltip": "Go back",
 			"PropertyInspectorPath": "ui/go-forward-back.html",
@@ -164,8 +164,8 @@
 			]
 		},
 		{
-			"Name": "Set Volume",
-			"UUID": "jp.hayate-kojima.ytm-desktop-controller.set-volume",
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.set-volume",
 			"Icon": "imgs/actions/set-volume/icon",
 			"Tooltip": "Set volume to a specific level (0-100)",
 			"PropertyInspectorPath": "ui/set-volume.html",
@@ -180,7 +180,7 @@
 			]
 		}
 	],
-	"Category": "ytm-desktop controller",
+	"Category": "Streamdek Controller",
 	"CategoryIcon": "imgs/plugin/category-icon",
 	"CodePath": "bin/plugin.js",
 	"Description": "This plugin allows you to control YouTube Music with pear-desktop (previous name: th-ch/ytm-desktop). For detailed instructions, please refer to https://github.com/tuat-yate/ytm-desktop-controller.",
@@ -203,5 +203,5 @@
 		"Version": "20",
 		"Debug": "enabled"
 	},
-	"UUID": "jp.hayate-kojima.ytm-desktop-controller"
+	"UUID": "com.blazzzplay.streamdek-controller"
 }

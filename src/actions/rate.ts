@@ -1,7 +1,7 @@
 import { action, KeyDownEvent } from "@elgato/streamdeck";
 import { BaseAction, BaseSettings } from "./base-action";
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.like" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.like" })
 export class LikeAction extends BaseAction<BaseSettings> {
 	override async onKeyDown(ev: KeyDownEvent<BaseSettings>): Promise<void> {
 		try {
@@ -14,7 +14,7 @@ export class LikeAction extends BaseAction<BaseSettings> {
 	}
 }
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.dislike" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.dislike" })
 export class DislikeAction extends BaseAction<BaseSettings> {
 	override async onKeyDown(ev: KeyDownEvent<BaseSettings>): Promise<void> {
 		try {

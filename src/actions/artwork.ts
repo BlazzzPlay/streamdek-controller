@@ -1,7 +1,7 @@
 import { action } from "@elgato/streamdeck";
 import { BaseAction, BaseSettings } from "./base-action";
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.artwork" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.artwork" })
 export class ArtworkAction extends BaseAction<BaseSettings> {
     
 }

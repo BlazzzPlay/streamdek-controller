@@ -6,7 +6,7 @@ type TrackSettings = BaseSettings & {
 	forcePlay: boolean;
 };
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.add-track-to-queue" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.add-track-to-queue" })
 export class AddTrackToQueueAction extends BaseAction<TrackSettings> {
 	override async onKeyDown(ev: KeyDownEvent<TrackSettings>): Promise<void> {
 		console.log("Button pressed. Adding track to queue...");

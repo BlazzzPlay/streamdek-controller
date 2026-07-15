@@ -1,7 +1,7 @@
 import { action, KeyDownEvent } from "@elgato/streamdeck";
 import { BaseAction, BaseSettings } from "./base-action";
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.toggle-play" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.toggle-play" })
 export class TogglePlayAction extends BaseAction<BaseSettings> {
 	override async onKeyDown(ev: KeyDownEvent<BaseSettings>): Promise<void> {
 		try {
@@ -13,7 +13,7 @@ export class TogglePlayAction extends BaseAction<BaseSettings> {
 	}
 }
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.next" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.next" })
 export class NextAction extends BaseAction<BaseSettings> {
 	override async onKeyDown(ev: KeyDownEvent<BaseSettings>): Promise<void> {
 		try {
@@ -25,7 +25,7 @@ export class NextAction extends BaseAction<BaseSettings> {
 	}
 }
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.previous" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.previous" })
 export class PreviousAction extends BaseAction<BaseSettings> {
 	override async onKeyDown(ev: KeyDownEvent<BaseSettings>): Promise<void> {
 		try {

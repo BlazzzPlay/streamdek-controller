@@ -5,7 +5,7 @@ type GoForwardBackSettings = BaseSettings & {
 	time : string;
 };
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.go-forward" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.go-forward" })
 export class GoForwardAction extends BaseAction<GoForwardBackSettings> {
 	override async onKeyDown(ev: KeyDownEvent<GoForwardBackSettings>): Promise<void> {
 		try {
@@ -18,7 +18,7 @@ export class GoForwardAction extends BaseAction<GoForwardBackSettings> {
 	}
 }
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.go-back" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.go-back" })
 export class GoBackAction extends BaseAction<GoForwardBackSettings> {
     override async onKeyDown(ev: KeyDownEvent<GoForwardBackSettings>): Promise<void> {
         try {

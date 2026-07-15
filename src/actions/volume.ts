@@ -5,7 +5,7 @@ type VolumeSettings = BaseSettings & {
 	volume: number;
 };
 
-@action({ UUID: "jp.hayate-kojima.ytm-desktop-controller.set-volume" })
+@action({ UUID: "com.blazzzplay.streamdek-controller.set-volume" })
 export class SetVolumeAction extends BaseAction<VolumeSettings> {
 	override async onKeyDown(ev: KeyDownEvent<VolumeSettings>): Promise<void> {
 		try {
