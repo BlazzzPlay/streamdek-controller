@@ -4,7 +4,7 @@
 	"Author": "BlazzzPlay",
 	"Actions": [
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Add Playlist",
 			"UUID": "com.blazzzplay.streamdek-controller.add-playlist-to-queue",
 			"Icon": "imgs/actions/add-playlist/icon",
 			"Tooltip": "Add playlist items to queue",
@@ -20,7 +20,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Add Track",
 			"UUID": "com.blazzzplay.streamdek-controller.add-track-to-queue",
 			"Icon": "imgs/actions/add-track/icon",
 			"Tooltip": "Add track items to queue",
@@ -36,7 +36,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Like",
 			"UUID": "com.blazzzplay.streamdek-controller.like",
 			"Icon": "imgs/actions/like/icon",
 			"Tooltip": "Like track",
@@ -52,7 +52,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Dislike",
 			"UUID": "com.blazzzplay.streamdek-controller.dislike",
 			"Icon": "imgs/actions/dislike/icon",
 			"Tooltip": "Dislike track",
@@ -68,7 +68,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Toggle Play",
 			"UUID": "com.blazzzplay.streamdek-controller.toggle-play",
 			"Icon": "imgs/actions/toggle-play/icon",
 			"Tooltip": "Toggle play/pause",
@@ -84,7 +84,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Next Track",
 			"UUID": "com.blazzzplay.streamdek-controller.next",
 			"Icon": "imgs/actions/next/icon",
 			"Tooltip": "Next track",
@@ -100,7 +100,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Previous Track",
 			"UUID": "com.blazzzplay.streamdek-controller.previous",
 			"Icon": "imgs/actions/previous/icon",
 			"Tooltip": "Previous track",
@@ -116,7 +116,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Artwork Preview",
 			"UUID": "com.blazzzplay.streamdek-controller.artwork",
 			"Icon": "imgs/actions/artwork/icon",
 			"Tooltip": "Previous artwork",
@@ -132,7 +132,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Go Forward",
 			"UUID": "com.blazzzplay.streamdek-controller.go-forward",
 			"Icon": "imgs/actions/go-forward/icon",
 			"Tooltip": "Go forward",
@@ -148,7 +148,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Go Back",
 			"UUID": "com.blazzzplay.streamdek-controller.go-back",
 			"Icon": "imgs/actions/go-back/icon",
 			"Tooltip": "Go back",
@@ -164,7 +164,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Set Volume",
 			"UUID": "com.blazzzplay.streamdek-controller.set-volume",
 			"Icon": "imgs/actions/set-volume/icon",
 			"Tooltip": "Set volume to a specific level (0-100)",
@@ -180,7 +180,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Volume Dial",
 			"UUID": "com.blazzzplay.streamdek-controller.volume-encoder",
 			"Icon": "imgs/actions/volume-encoder/icon",
 			"Tooltip": "Adjust volume with dial; press to toggle mute",
@@ -202,7 +202,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Seek Dial",
 			"UUID": "com.blazzzplay.streamdek-controller.seek-encoder",
 			"Icon": "imgs/actions/seek-encoder/icon",
 			"Tooltip": "Seek track with dial; press to toggle play",
@@ -224,7 +224,7 @@
 			]
 		},
 		{
-			"Name": "Streamdek Controller",
+			"Name": "Track Navigator",
 			"UUID": "com.blazzzplay.streamdek-controller.track-navigator",
 			"Icon": "imgs/actions/track-navigator/icon",
 			"Tooltip": "Navigate tracks with dial; shows album art + progress",
