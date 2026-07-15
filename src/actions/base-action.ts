@@ -1,4 +1,20 @@
-import { DidReceiveGlobalSettingsEvent, DidReceiveSettingsEvent, SingletonAction, streamDeck, WillAppearEvent, WillDisappearEvent } from "@elgato/streamdeck";
+import {
+	DidReceiveGlobalSettingsEvent,
+	DidReceiveSettingsEvent,
+	SingletonAction,
+	streamDeck,
+	WillAppearEvent,
+	WillDisappearEvent
+} from "@elgato/streamdeck";
+import {
+	getPort as httpGetPort,
+	getBaseUrl as httpGetBaseUrl,
+	httpRequest,
+	httpGet as httpGetFn,
+	httpPost as httpPostFn,
+	httpPatch as httpPatchFn,
+	httpDelete as httpDeleteFn
+} from "./http-client";
 
 export type BaseSettings = {
 	port: string; // Kept for individual overrides, but global is preferred.
@@ -84,11 +100,11 @@ export abstract class BaseAction<T extends BaseSettings> extends SingletonAction
 	}
 
     protected getPort(settings: T): string {
-        return this.globalSettings.port || settings.port || "26538";
+        return httpGetPort(settings, this.globalSettings);
     }
 
     protected getBaseUrl(port: string): string {
-        return `http://localhost:${port}/api/v1`;
+        return httpGetBaseUrl(port);
     }
 
     protected async request(
@@ -96,60 +112,23 @@ export abstract class BaseAction<T extends BaseSettings> extends SingletonAction
         endpoint: string,
         options: RequestInit = {}
     ): Promise<Response> {
-        const url = `${this.getBaseUrl(port)}${endpoint}`;
-        const defaultHeaders: Record<string, string> = {
-            "Content-Type": "application/json"
-        };
-
-        // options.headers の処理を修正
-        const headers = { ...defaultHeaders };
-        if (options.headers) {
-             Object.assign(headers, options.headers);
-        }
-
-        try {
-            const response = await fetch(url, {
-                ...options,
-                headers: headers
-            });
-
-            if (!response.ok) {
-                console.warn(`[${this.constructor.name}] Request to ${endpoint} failed: ${response.status} ${response.statusText}`);
-            }
-            return response;
-        } catch (error) {
-            console.error(`[${this.constructor.name}] Request error (${endpoint}):`, error);
-            throw error;
-        }
+        return httpRequest(port, endpoint, options);
     }
 
     protected async get(port: string, endpoint: string): Promise<any> {
-        const response = await this.request(port, endpoint, { method: "GET" });
-        if (response.ok) {
-            return response.json();
-        }
-        return null;
+        return httpGetFn(port, endpoint);
     }
 
     protected async post(port: string, endpoint: string, body?: any): Promise<Response> {
-        return this.request(port, endpoint, {
-            method: "POST",
-            body: body ? JSON.stringify(body) : undefined
-        });
+        return httpPostFn(port, endpoint, body);
     }
 
     protected async patch(port: string, endpoint: string, body?: any): Promise<Response> {
-        return this.request(port, endpoint, {
-            method: "PATCH",
-            body: body ? JSON.stringify(body) : undefined
-        });
+        return httpPatchFn(port, endpoint, body);
     }
 
     protected async delete(port: string, endpoint: string, body?: any): Promise<Response> {
-        return this.request(port, endpoint, {
-            method: "DELETE",
-            body: body ? JSON.stringify(body) : undefined
-        });
+        return httpDeleteFn(port, endpoint, body);
     }
 
 	// JPEG/PNG のヘッダから画像サイズを読む(画素はデコードしない)。読めなければ null。

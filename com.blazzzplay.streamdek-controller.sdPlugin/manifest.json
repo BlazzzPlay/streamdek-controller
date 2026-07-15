@@ -178,6 +178,50 @@
 					"TitleAlignment": "middle"
 				}
 			]
+		},
+		{
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.volume-encoder",
+			"Icon": "imgs/actions/volume-encoder/icon",
+			"Tooltip": "Adjust volume with dial; press to toggle mute",
+			"PropertyInspectorPath": "ui/volume-encoder.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "$B1",
+				"TriggerDescription": {
+					"Rotate": "Volume (+-2)",
+					"Push": "Toggle mute"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/volume-encoder/key"
+				}
+			]
+		},
+		{
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.seek-encoder",
+			"Icon": "imgs/actions/seek-encoder/icon",
+			"Tooltip": "Seek track with dial; press to toggle play",
+			"PropertyInspectorPath": "ui/seek-encoder.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "$B1",
+				"TriggerDescription": {
+					"Rotate": "Seek (+-5s)",
+					"Push": "Play/Pause"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/seek-encoder/key"
+				}
+			]
 		}
 	],
 	"Category": "Streamdek Controller",
