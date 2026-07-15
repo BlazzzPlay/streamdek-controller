@@ -222,12 +222,34 @@
 					"Image": "imgs/actions/seek-encoder/key"
 				}
 			]
+		},
+		{
+			"Name": "Streamdek Controller",
+			"UUID": "com.blazzzplay.streamdek-controller.track-navigator",
+			"Icon": "imgs/actions/track-navigator/icon",
+			"Tooltip": "Navigate tracks with dial; shows album art + progress",
+			"PropertyInspectorPath": "ui/track-navigator.html",
+			"Controllers": [
+				"Encoder"
+			],
+			"Encoder": {
+				"layout": "layouts/track-nav.json",
+				"TriggerDescription": {
+					"Rotate": "Prev / Next track",
+					"Push": "Play / Pause"
+				}
+			},
+			"States": [
+				{
+					"Image": "imgs/actions/track-navigator/key"
+				}
+			]
 		}
 	],
 	"Category": "Streamdek Controller",
 	"CategoryIcon": "imgs/plugin/category-icon",
 	"CodePath": "bin/plugin.js",
-	"Description": "This plugin allows you to control YouTube Music with pear-desktop (previous name: th-ch/ytm-desktop). For detailed instructions, please refer to https://github.com/tuat-yate/ytm-desktop-controller.",
+	"Description": "Control pear-desktop (YouTube Music) from your Stream Deck. Fork of ytm-desktop-controller with encoder/dial support for Stream Deck Plus.",
 	"Icon": "imgs/plugin/marketplace",
 	"SDKVersion": 3,
 	"Software": {

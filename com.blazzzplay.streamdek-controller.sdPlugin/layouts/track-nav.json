@@ -1,0 +1,50 @@
+{
+    "id": "com.blazzzplay.streamdek-controller.track-nav",
+    "items": [
+        {
+            "key": "cover",
+            "type": "pixmap",
+            "rect": [4, 6, 48, 48],
+            "enabled": true,
+            "zOrder": 0
+        },
+        {
+            "key": "title",
+            "type": "text",
+            "font": { "size": 16, "weight": 600 },
+            "rect": [58, 6, 138, 20],
+            "alignment": "left",
+            "value": "No track",
+            "zOrder": 1
+        },
+        {
+            "key": "artist",
+            "type": "text",
+            "font": { "size": 14, "weight": 400 },
+            "rect": [58, 28, 138, 18],
+            "alignment": "left",
+            "value": "",
+            "zOrder": 2
+        },
+        {
+            "key": "time",
+            "type": "text",
+            "font": { "size": 12, "weight": 400 },
+            "rect": [68, 52, 60, 16],
+            "alignment": "center",
+            "value": "0:00",
+            "zOrder": 3
+        },
+        {
+            "key": "progress",
+            "type": "bar",
+            "subtype": 0,
+            "rect": [58, 74, 138, 8],
+            "border_w": 0,
+            "bar_fill_c": "#1ed760",
+            "bar_bg_c": "#333333",
+            "value": 0,
+            "zOrder": 4
+        }
+    ]
+}
